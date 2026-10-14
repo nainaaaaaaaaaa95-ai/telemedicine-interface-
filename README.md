@@ -24,31 +24,7 @@ The prescription page provides patients with a digital interface for viewing the
 ### 📹 Video Consultation Page
 The video consultation interface provides a virtual environment for doctor-patient communication, including video interaction and essential call controls.
 
-## 📸 Project Screenshots
 
-### Homepage
-![Homepage](screenshots/index page.png)
-
-### Login Page
-![Login Page](screenshots/login page.png)
-
-### Signup Page
-![Signup Page](screenshots/signup page.png)
-
-### Patient Dashboard
-![Patient Dashboard](screenshots/patient dashboard.png)
-
-### Doctor Dashboard
-![Doctor Dashboard](screenshots/doctor dashboard.png)
-
-### Appointment Page
-![Appointment Page](screenshots/appointment page.png)
-
-### Prescription Page
-![Prescription Page](screenshots/prescription page.png)
-
-### Video Consultation
-![Video Consultation](screenshots/video call page.png)
 ## About the Project
 
 The main objective of this project is to bridge the gap between senior citizens and healthcare professionals by providing essential healthcare services through a simple digital platform.
