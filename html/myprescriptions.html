@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Prescriptions</title>
+
+<link rel="stylesheet"
+ href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+ crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1e293b;
+  }
+
+  .navbar {
+    background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #667eea;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    color: #333;
+    text-align: center;
+  }
+
+  .prescriptions-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: white;
+    overflow: hidden;
+  }
+
+  .card-header-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px 20px 0 0;
+    border: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+
+  .card-header-custom h5 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .table-responsive-custom {
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+  }
+
+  .table-custom {
+    margin-bottom: 0;
+  }
+
+  .table-custom thead th {
+    background: #f1f5f9;
+    color: #1e293b;
+    border: none;
+    font-weight: 700;
+    padding: 1.25rem;
+    border-bottom: 3px solid #667eea;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .table-custom tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+  }
+
+  .table-custom tbody tr:hover {
+    background-color: #f8fafc;
+    transform: translateX(5px);
+  }
+
+  .table-custom tbody td {
+    padding: 1.25rem;
+    vertical-align: middle;
+  }
+
+  .btn-view-rx {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-view-rx:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+  }
+
+  .empty-state {
+    background: #f8f9ff;
+    border: 2px dashed #667eea;
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #64748b;
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+</style>
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark">
+  <div class="container-fluid">
+    <a href="/html/profile.html" class="navbar-brand">⬅ Back to Profile</a>
+    <span class="navbar-text text-white" style="font-weight: 600;">📋 My Prescriptions</span>
+  </div>
+</nav>
+
+<div class="container-fluid mt-5 mb-5">
+  <div class="page-header">
+    <h3><i class="fas fa-prescription-bottle"></i> My Prescriptions</h3>
+    <p class="text-muted">View all your medical prescriptions from doctors</p>
+  </div>
+
+  <div class="prescriptions-card">
+    <div class="card-header-custom">
+      <h5><i class="fas fa-file-medical"></i> Your Prescriptions</h5>
+    </div>
+
+    <div class="table-responsive-custom">
+      <table class="table table-custom" id="prescriptionsTable" style="display: none;">
+        <thead>
+          <tr>
+            <th><i class="fas fa-doctor"></i> Doctor</th>
+            <th><i class="fas fa-stethoscope"></i> Diagnosis</th>
+            <th><i class="fas fa-calendar"></i> Date</th>
+            <th><i class="fas fa-eye"></i> Action</th>
+          </tr>
+        </thead>
+        <tbody id="prescriptionsList"></tbody>
+      </table>
+
+      <div id="emptyContainer" class="empty-state">
+        <div class="empty-state-icon">
+          <i class="fas fa-prescription-bottle"></i>
+        </div>
+        <p class="empty-state-text">No prescriptions yet</p>
+        <p style="font-size: 0.95rem; color: #94a3b8;">Once a doctor prescribes medicine, it will appear here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Viewing Prescription -->
+<div class="modal fade" id="viewPrescriptionModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0" style="border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+      <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 20px 20px 0 0;">
+        <h5 class="modal-title"><i class="fas fa-file-medical"></i> Prescription Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding: 2rem;">
+        <div class="alert" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px;">
+          <i class="fas fa-doctor"></i> <strong>Doctor:</strong> <span id="prescriptionDoctorName"></span>
+        </div>
+        
+        <div class="mb-4">
+          <h6 class="fw-bold" style="color: #667eea;"><i class="fas fa-stethoscope"></i> Diagnosis</h6>
+          <p id="viewDiagnosis" style="border: 2px solid #e2e8f0; padding: 1rem; border-radius: 12px; background: #f8f9ff;"></p>
+        </div>
+        
+        <div class="mb-4">
+          <h6 class="fw-bold" style="color: #667eea;"><i class="fas fa-pills"></i> Medicines</h6>
+          <div id="viewMedicines" style="border: 2px solid #e2e8f0; padding: 1rem; border-radius: 12px; background: #f8f9ff; white-space: pre-line;"></div>
+        </div>
+        
+        <div class="mb-4">
+          <h6 class="fw-bold" style="color: #667eea;"><i class="fas fa-clipboard-list"></i> Instructions</h6>
+          <p id="viewNotes" style="border: 2px solid #e2e8f0; padding: 1rem; border-radius: 12px; background: #f8f9ff;"></p>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-weight: 600;" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/myprescriptions.js"></script>
+</body>
+</html>

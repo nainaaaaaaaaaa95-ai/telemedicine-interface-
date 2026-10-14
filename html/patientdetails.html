@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patient Details</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    .navbar {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .patient-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: white;
+    }
+    .patient-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 12px 12px 0 0;
+    }
+    .patient-header h3 {
+      margin: 0;
+      font-weight: 700;
+    }
+    .patient-body {
+      padding: 30px;
+    }
+    .info-section {
+      margin-bottom: 30px;
+    }
+    .info-section h5 {
+      color: #667eea;
+      font-weight: 700;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #667eea;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #333;
+    }
+    .info-value {
+      color: #666;
+      text-align: right;
+    }
+    .form-section {
+      background: #f8f9ff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .action-buttons button {
+      flex: 1;
+      min-width: 120px;
+    }
+    .modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container">
+    <a href="javascript:history.back()" class="navbar-brand fw-bold"><i class="fas fa-arrow-left"></i> Back</a>
+    <span class="navbar-brand fw-bold text-white">Patient Details</span>
+  </div>
+</nav>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      
+      <!-- Patient Information Card -->
+      <div class="card patient-card mb-4">
+        <div class="patient-header">
+          <h3 id="patientName"><i class="fas fa-user-circle"></i> Loading...</h3>
+        </div>
+        <div class="patient-body">
+          
+          <!-- Personal Information -->
+          <div class="info-section">
+            <h5><i class="fas fa-user"></i> Personal Information</h5>
+            <div class="info-row">
+              <span class="info-label">Full Name:</span>
+              <span class="info-value" id="displayName">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span class="info-value" id="displayEmail">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Mobile:</span>
+              <span class="info-value" id="displayMobile">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Gender:</span>
+              <span class="info-value" id="displayGender">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Date of Birth:</span>
+              <span class="info-value" id="displayDOB">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Address:</span>
+              <span class="info-value" id="displayAddress">-</span>
+            </div>
+          </div>
+
+          <!-- Health Information -->
+          <div class="info-section" id="healthSection" style="display: none;">
+            <h5><i class="fas fa-heart"></i> Health Information</h5>
+            <div class="info-row">
+              <span class="info-label">Blood Group:</span>
+              <span class="info-value" id="displayBloodGroup">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Allergies:</span>
+              <span class="info-value" id="displayAllergies">-</span>
+            </div>
+          </div>
+
+          <!-- Emergency Contact -->
+          <div class="info-section" id="emergencySection" style="display: none;">
+            <h5><i class="fas fa-phone"></i> Emergency Contact</h5>
+            <div class="info-row">
+              <span class="info-label">Contact Name:</span>
+              <span class="info-value" id="displayEmergencyName">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Contact Mobile:</span>
+              <span class="info-value" id="displayEmergencyMobile">-</span>
+            </div>
+          </div>
+
+          <!-- Add Meet Link Section -->
+          <div class="form-section">
+            <h5 class="mb-3"><i class="fas fa-video"></i> Add Google Meet Link</h5>
+            <form id="meetLinkForm">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Google Meet Link</label>
+                <input type="url" class="form-control" id="meetLinkInput" 
+                       placeholder="https://meet.google.com/..." required>
+                <small class="text-muted d-block mt-2">
+                  <i class="fas fa-info-circle"></i> 
+                  Paste your Google Meet link here. It will be visible to the patient on their dashboard.
+                </small>
+              </div>
+              <div class="action-buttons">
+                <button type="submit" class="btn btn-primary" id="saveMeetBtn">
+                  <i class="fas fa-save"></i> Save Meet Link
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="clearMeetLink()">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+            </form>
+            <div id="meetStatus" class="mt-3"></div>
+          </div>
+
+          <!-- Add Prescription Section -->
+          <div class="form-section">
+            <h5 class="mb-3"><i class="fas fa-prescription-bottle"></i> Create Prescription</h5>
+            <form id="prescriptionForm">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Diagnosis</label>
+                <input type="text" class="form-control" id="diagnosisInput" 
+                       placeholder="e.g., Viral Fever, Common Cold" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Medicines</label>
+                <textarea class="form-control" id="medicinesInput" rows="4"
+                          placeholder="e.g., 
+Paracetamol 500mg - 2 tablets 3 times daily
+Ibuprofen 200mg - 1 tablet 2 times daily
+(one medicine per line)"
+                          required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Doctor Notes / Instructions (Optional)</label>
+                <textarea class="form-control" id="notesInput" rows="3"
+                          placeholder="e.g., Avoid dairy products, drink plenty of water, rest for 3 days"></textarea>
+              </div>
+              <div class="action-buttons">
+                <button type="submit" class="btn btn-success" id="savePrescriptionBtn">
+                  <i class="fas fa-save"></i> Save Prescription
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="clearPrescription()">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+            </form>
+            <div id="prescriptionStatus" class="mt-3"></div>
+          </div>
+
+          <!-- Appointment Status Section -->
+          <div class="form-section">
+            <h5 class="mb-3"><i class="fas fa-tasks"></i> Appointment Status</h5>
+            <div id="statusSection">
+              <p class="text-muted">Loading appointment status...</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons mt-4">
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='/html/drdash.html'">
+              <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <button type="button" class="btn btn-primary" id="viewAppointmentsBtn">
+              <i class="fas fa-calendar"></i> View Appointments
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/patientdetails.js"></script>
+</body>
+</html>
